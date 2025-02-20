@@ -1,12 +1,34 @@
 import './App.css'
 import ProductCard from './components/productCard'
+import { GoGraph } from "react-icons/go";
+import { FaRegBookmark, FaRegUser } from "react-icons/fa6";
+import { MdOutlineSpeaker } from 'react-icons/md';
 
 function App() {
 
   return (
-    <>
-      <ProductCard name="audio setup" price="3250/-" description="jnfdsf nduhf jdsfu he hfuhesh nfisue" img="https://img.drz.lazcdn.com/g/kf/S6cfb0ee8d9f74ebb9660fd04b3622e364.jpg_720x720q80.jpg_.webp" />
-    </>
+    <div className='w-full h-screen flex'>
+      <div className='w-[400px] h-full bg-green-200'>
+        <button className='w-full h-[40px] text-[25px] font-bold flex items-center justify-evenly'>
+          Dashboard
+          <GoGraph />
+        </button>
+        <button className='w-full h-[40px] text-[25px] font-bold flex items-center justify-evenly'>
+          Bookings
+          <FaRegBookmark />
+        </button>
+        <button className='w-full h-[40px] text-[25px] font-bold flex items-center justify-evenly'>
+          Items
+          <MdOutlineSpeaker />
+        </button>
+        <button className='w-full h-[40px] text-[25px] font-bold flex items-center justify-evenly'>
+          Users
+          <FaRegUser />
+        </button>
+      </div>
+      <div className='w-full bg-red-900'>
+      </div>
+    </div>
   )
 }
 
