@@ -3,32 +3,25 @@ import ProductCard from './components/productCard'
 import { GoGraph } from "react-icons/go";
 import { FaRegBookmark, FaRegUser } from "react-icons/fa6";
 import { MdOutlineSpeaker } from 'react-icons/md';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import AdminPage from './pages/admin/adminPage';
+import HomePage from './pages/home/homePage';
+import Testing from './components/testing';
+import LoginPage from './pages/login/login';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
 
   return (
-    <div className='w-full h-screen flex'>
-      <div className='w-[400px] h-full bg-green-200'>
-        <button className='w-full h-[40px] text-[25px] font-bold flex items-center justify-evenly'>
-          Dashboard
-          <GoGraph />
-        </button>
-        <button className='w-full h-[40px] text-[25px] font-bold flex items-center justify-evenly'>
-          Bookings
-          <FaRegBookmark />
-        </button>
-        <button className='w-full h-[40px] text-[25px] font-bold flex items-center justify-evenly'>
-          Items
-          <MdOutlineSpeaker />
-        </button>
-        <button className='w-full h-[40px] text-[25px] font-bold flex items-center justify-evenly'>
-          Users
-          <FaRegUser />
-        </button>
-      </div>
-      <div className='w-full bg-red-900'>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Toaster position='top-right' />
+      <Routes path="/*">
+        <Route path='/testing' element={<Testing />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path="/admin/*" element={<AdminPage />}/>
+        <Route path="/*" element={<HomePage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
