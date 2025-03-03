@@ -1,94 +1,99 @@
-const sampleArr = [
-    {
-        key: "P001",
-        name: "Wireless Keyboard",
-        price: 25.99,
-        category: "Electronics",
-        dimensions: "17.5 x 5.5 x 1 inches",
-        description: "A sleek and ergonomic wireless keyboard with long battery life.",
-        availability: true,
-        image: ["https://example.com/keyboard.jpg"]
-    },
-    {
-        key: "P002",
-        name: "Bluetooth Headphones",
-        price: 49.99,
-        category: "Electronics",
-        dimensions: "6.5 x 3 x 7 inches",
-        description: "Noise-canceling over-ear headphones with deep bass and clear sound.",
-        availability: true,
-        image: ["https://example.com/headphones.jpg"]
-    },
-    {
-        key: "P003",
-        name: "Ceramic Coffee Mug",
-        price: 9.99,
-        category: "Kitchen",
-        dimensions: "4 x 3 x 3 inches",
-        description: "A durable ceramic coffee mug with a stylish design.",
-        availability: true,
-        image: ["https://example.com/mug.jpg"]
-    },
-    {
-        key: "P004",
-        name: "LED Desk Lamp",
-        price: 34.99,
-        category: "Home & Office",
-        dimensions: "12 x 5 x 15 inches",
-        description: "A modern LED desk lamp with adjustable brightness and USB charging port.",
-        availability: false,
-        image: ["https://example.com/lamp.jpg"]
-    },
-    {
-        key: "P005",
-        name: "Running Shoes",
-        price: 69.99,
-        category: "Sportswear",
-        dimensions: "10 x 4 x 5 inches",
-        description: "Lightweight and comfortable running shoes for daily workouts.",
-        availability: true,
-        image: ["https://example.com/shoes.jpg"]
-    }
-];
-
-
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
-import { Link } from "react-router-dom";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function AdminItemsPage(){
-    return(
-        <div className="w-full h-full relative">
 
-            <table>
-                <thead>
-                    <th>Key</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Category</th>
-                    <th>Dimensions</th>
-                    <th>Availability</th>
-                </thead>
-                <tbody>
-                    {
-                        sampleArr.map((product)=>{
-                            console.log(product)
-                            return(
-                                <tr key={product.key}>
-                                    <td>{product.key}</td>
-                                    <td>{product.name}</td>
-                                    <td>{product.price}</td>
-                                    <td>{product.category}</td>
-                                    <td>{product.availability ? "Available" : "Not Available"}</td>
-                                </tr>
-                            )
-                        })
-                    }
-                </tbody>
-            </table>
+export default function AdminItemsPage() {
+    const [items, setItems] = useState([]);
+    const [itemsLoaded, setItemsLoaded] = useState(false);
+    const navigate = useNavigate()
 
-            <Link to="/admin/items/add">
-                <CiCirclePlus className="text-[70px] absolute right-2 bottom-2 hover:text-red-900"/>
+    useEffect(() => {
+        if(!itemsLoaded){
+            const token = localStorage.getItem("token");
+            axios.get("http://localhost:3000/api/products", { headers: { "Authorization": `Bearer ${token}` } })
+            .then((res) => {
+                console.log(res.data);
+                setItems(res.data);
+                setItemsLoaded(true);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        }
+        
+    }, [itemsLoaded]);
+
+    const handleDelete = (key) => {
+        if (window.confirm("Are you sure you want tot delete this item")) {
+            setItems(items.filter((item) => item.key !== key));
+            const token = localStorage.getItem("token");
+            axios.delete(`http://localhost:3000/api/products/${key}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            }).then(
+                (res) => {
+                    console.log(res.data);
+                    setItemsLoaded(false);
+                }
+            ).catch(
+                (err) => {
+                    console.log(err);
+                }
+            )
+        }
+    };
+
+    return (
+        <div className="w-full h-full p-6 bg-gray-100 flex flex-col items-center">
+            {!itemsLoaded &&<div className="border-4 my-4 border-b-green-500 w-[100px] h-[100px] rounded-full animate-spin"></div>}
+            {itemsLoaded &&<div className="overflow-x-auto">
+                <table className="w-full border-collapse bg-white shadow-md rounded-lg overflow-hidden">
+                    <thead>
+                        <tr className="bg-blue-600 text-white">
+                            <th className="p-3 text-left">Key</th>
+                            <th className="p-3 text-left">Name</th>
+                            <th className="p-3 text-left">Price</th>
+                            <th className="p-3 text-left">Category</th>
+                            <th className="p-3 text-left">Availability</th>
+                            <th className="p-3 text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {items.map((product) => (
+                            <tr key={product.key} className="border-b hover:bg-gray-100">
+                                <td className="p-3">{product.key}</td>
+                                <td className="p-3">{product.name}</td>
+                                <td className="p-3">${product.price.toFixed(2)}</td>
+                                <td className="p-3">{product.category}</td>
+                                <td className="p-3">
+                                    <span className={`px-2 py-1 rounded text-sm font-medium ${product.availability
+                                            ? "bg-green-100 text-green-700"
+                                            : "bg-red-100 text-red-700"
+                                        }`}>
+                                        {product.availability ? "Available" : "Not Available"}
+                                    </span>
+                                </td>
+                                <td className="p-3 flex justify-center gap-3">
+                                    <button onClick={() => {
+                                        navigate('/admin/items/edit', {state:product})
+                                    }} className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 flex items-center">
+                                        <FaEdit className="mr-1" />Edit
+                                    </button>
+                                    <button onClick={() => handleDelete(product.key)} className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600 flex items-center ">
+                                        <FaTrashAlt className="inline mr-1" />Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>}
+
+            <Link to="/admin/items/add" className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700">
+                <CiCirclePlus className="text-5xl" />
             </Link>
         </div>
-    )
+    );
 }
