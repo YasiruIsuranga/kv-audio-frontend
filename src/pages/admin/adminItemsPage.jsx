@@ -13,7 +13,7 @@ export default function AdminItemsPage() {
     useEffect(() => {
         if(!itemsLoaded){
             const token = localStorage.getItem("token");
-            axios.get("http://localhost:3000/api/products", { headers: { "Authorization": `Bearer ${token}` } })
+            axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products`, { headers: { "Authorization": `Bearer ${token}` } })
             .then((res) => {
                 console.log(res.data);
                 setItems(res.data);
@@ -30,7 +30,7 @@ export default function AdminItemsPage() {
         if (window.confirm("Are you sure you want tot delete this item")) {
             setItems(items.filter((item) => item.key !== key));
             const token = localStorage.getItem("token");
-            axios.delete(`http://localhost:3000/api/products/${key}`, {
+            axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/products/${key}`, {
                 headers: { Authorization: `Bearer ${token}` },
             }).then(
                 (res) => {
