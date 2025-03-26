@@ -15,7 +15,7 @@ export default function AddItemPage() {
     const navigate = useNavigate();
 
     async function handleAddItem() {
-        console.log(productImages);
+        
         const promises =[];
         for(let i=0; i<productImages.length; i++){
             console.log(productImages[i]);
@@ -77,25 +77,26 @@ export default function AddItemPage() {
                     value={productKey}
                     type="text"
                     placeholder="Product Key"
-                    className="w-full p-2 border rounded"
+                    className="w-full mt-2 p-2 border rounded"
                 />
                 <input
                     onChange={(e) => setProductName(e.target.value)}
                     value={productName}
                     type="text"
                     placeholder="Name"
-                    className="w-full p-2 border rounded"
+                    className="w-full mt-2 p-2 border rounded"
                 />
                 <input
                     onChange={(e) => setProductPrice(e.target.value)}
                     value={productPrice}
                     type="number"
                     placeholder="Price"
-                    className="w-full p-2 border rounded"
+                    className="w-full mt-2 p-2 border rounded"
                 />
                 <select
                     value={productCategory}
                     onChange={(e) => setProductCategory(e.target.value)}
+                    className="w-full mt-2 p-2 border rounded"
                 >
                     <option value="audio">Audio</option>
                     <option value="lights">Lights</option>
@@ -105,16 +106,16 @@ export default function AddItemPage() {
                     value={productDimensions}
                     type="text"
                     placeholder="Product Dimensions"
-                    className="w-full p-2 border rounded"
+                    className="w-full mt-2 p-2 border rounded"
                 />
                 <textarea
                     onChange={(e) => setProductDescription(e.target.value)}
                     value={productDescription}
                     type="text"
                     placeholder="Product Description"
-                    className="w-full p-2 border rounded"
+                    className="w-full mt-2 p-2 border rounded"
                 />
-                <input type="file" multiple onChange={(e) => { setProductImages(e.target.files) }} className="w-full p-2 border rounded" />
+                <input type="file" multiple onChange={(e) => { setProductImages(e.target.files) }} className="w-full mt-2 p-2 border rounded" />
                 <button onClick={handleAddItem} className="w-full p-2 border rounded bg-blue-500 text-white hover:bg-blue-700">Add</button>
                 <button onClick={() => { navigate("/admin/items") }} className="w-full p-2 border rounded bg-red-500 text-white hover:bg-red-700">Cancel</button>
             </div>
