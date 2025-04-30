@@ -44,9 +44,9 @@ export default function LoginPage(){
             <form onSubmit={handleOnSubmit}>
                 <div className="w-[400px] h-[400px] backdrop-blur-xl rounded-2xl flex justify-center items-center flex-col relative">
                     
-                    <img src="/logo.png" alt="logo" className="w-[100px] h-[100px] top-1 object-cover" />
+                    <img src="/logo.png" alt="logo" className="w-[150px] h-[150px] top-1 object-cover" />
                     
-                    <input type="email" placeholder="Email" className="mt-6 w-[300px] h-[30px] text-white bg-transparent border-b-2 border-white text-xl outline-none" value={email} onChange={
+                    <input type="email" placeholder="Email" className="mt-4 w-[300px] h-[30px] text-white bg-transparent border-b-2 border-white text-xl outline-none" value={email} onChange={
                         (e)=>{
                             setEmail(e.target.value);
                         }} 
