@@ -31,25 +31,30 @@ export default function RegisterPage() {
         })
     }
 
+    function goToLogin() {
+        navigate("/login")
+    }
+
     return (
         <div className="w-full h-screen flex justify-center items-center bg-picture">
             <form onSubmit={handleOnSubmit}>
-                <div className="w-[400px] h-[500px] backdrop-blur-xl rounded-2xl flex justify-center items-center flex-col relative">
-                    <img src="/logo.png" alt="logo" className="w-[100px] h-[100px] top-1 object-cover" />
+                <div className="w-[300px] md:w-[400px] h-[500px] backdrop-blur-xl rounded-2xl flex justify-center items-center flex-col relative bg-white/15">
+                    <img src="/logo2.png" alt="logo" className="w-[100px] h-[100px] top-1 object-cover" />
 
-                    <input type="text" placeholder="First Name" className="mt-5 w-[300px] h-[30px] text-white bg-transparent border-b-2 border-white text-xl outline-none" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                    <input type="text" placeholder="First Name" className="mt-5 w-[250px] md:w-[300px] h-[30px] text-white bg-transparent border-b-2 border-white text-xl outline-none" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
 
-                    <input type="text" placeholder="Last Name" className="mt-4 w-[300px] h-[30px] text-white bg-transparent border-b-2 border-white text-xl outline-none" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                    <input type="text" placeholder="Last Name" className="mt-4 w-[250px] md:w-[300px] h-[30px] text-white bg-transparent border-b-2 border-white text-xl outline-none" value={lastName} onChange={(e) => setLastName(e.target.value)} />
 
-                    <input type="email" placeholder="Email" className="mt-4 w-[300px] h-[30px] text-white bg-transparent border-b-2 border-white text-xl outline-none" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input type="email" placeholder="Email" className="mt-4 w-[250px] md:w-[300px] h-[30px] text-white bg-transparent border-b-2 border-white text-xl outline-none" value={email} onChange={(e) => setEmail(e.target.value)} />
 
-                    <input type="password" placeholder="Password" className="mt-4 w-[300px] h-[30px] text-white bg-transparent border-b-2 border-white text-xl outline-none" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <input type="password" placeholder="Password" className="mt-4 w-[250px] md:w-[300px] h-[30px] text-white bg-transparent border-b-2 border-white text-xl outline-none" value={password} onChange={(e) => setPassword(e.target.value)} />
 
-                    <input type="text" placeholder="Address" className="mt-4 w-[300px] h-[30px] text-white bg-transparent border-b-2 border-white text-xl outline-none" value={address} onChange={(e) => setAddress(e.target.value)} />
+                    <input type="text" placeholder="Address" className="mt-4 w-[250px] md:w-[300px] h-[30px] text-white bg-transparent border-b-2 border-white text-xl outline-none" value={address} onChange={(e) => setAddress(e.target.value)} />
 
-                    <input type="text" placeholder="Phone" className="mt-4 w-[300px] h-[30px] text-white bg-transparent border-b-2 border-white text-xl outline-none" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                    <input type="text" placeholder="Phone" className="mt-4 w-[250px] md:w-[300px] h-[30px] text-white bg-transparent border-b-2 border-white text-xl outline-none" value={phone} onChange={(e) => setPhone(e.target.value)} />
 
-                    <button className="my-6 w-[300px] h-[50px] bg-[#efac38] text-white rounded-lg" >Register</button>
+                    <button className="my-2 w-[250px] md:w-[300px] h-[40px] bg-[#CA7842] text-white rounded-lg" >Register</button>
+                    <button onClick={goToLogin} className="my-2 w-[250px] md:w-[300px] h-[40px] bg-[#CA7842] text-white rounded-lg" >Alredy Have a Account</button>
                 </div>
             </form>
         </div>
